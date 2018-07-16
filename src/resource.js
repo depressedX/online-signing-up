@@ -32,6 +32,35 @@ export function logout() {
     return http.post('logout').then(handleResponse)
 }
 
-export function f() {
-    
+// 获取用户信息
+export function getUserInfo() {
+    return http.get('user').then(handleResponse)
+}
+
+/***
+ * 更新用户信息
+ * @param bundle 要修改的字段
+ * @return {Promise<AxiosResponse<any>>}
+ */
+export function updateUserInfo(bundle) {
+    return http.post('user',qs.stringify(bundle)).then(handleResponse)
+}
+
+export function getSigningUpDeadline() {
+    return http.get('deadline').then(handleResponse)
+}
+
+// 提交报名表
+export function submitForm(form) {
+    return http.post('form',form).then(handleResponse)
+}
+
+// 获取招新进程
+export function getProcess() {
+    return http.get('process').then(handleResponse)
+}
+
+// 获取试用期内作业完成情况
+export function getWorkExecution() {
+    return http.get('work').then(handleResponse)
 }
