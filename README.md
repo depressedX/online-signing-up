@@ -5,3 +5,5 @@ online-signing-up
 
 [原型](https://modao.cc/app/IWWhIKmjXauwrwwQod1wddDrz9mBxRo
 )
+
+[tiny demo](https://depressedx.github.io/online-signing-up/page/index.html#/)
