@@ -55,6 +55,11 @@ export function submitForm(form) {
     return http.post('form',form).then(handleResponse)
 }
 
+// 获取报名表
+export function getForm() {
+    return http.get('form').then(handleResponse)
+}
+
 // 获取招新进程
 export function getProcess() {
     return http.get('process').then(handleResponse)

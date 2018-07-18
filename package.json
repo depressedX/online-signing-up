@@ -8,8 +8,10 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "element-ui": "^2.4.4",
     "qs": "^6.5.2",
     "vue": "^2.5.16",
+    "vue-drawer-layout": "^0.3.1",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
