@@ -2,6 +2,13 @@
     <div class="join">
         <app-bar>报名</app-bar>
         <main>
+            <el-row style="margin: .5em">
+                <el-alert
+                        :closable="false"
+                        title="团队事业群不在软件园校区纳新！请软件园同学不要误报"
+                        type="info">
+                </el-alert>
+            </el-row>
             <el-form ref="form" :rules="rules" :model="form" label-width="80px" label-position="left">
                 <el-form-item label="姓名" prop="name">
                     <el-input v-model="form.name" disabled></el-input>
@@ -30,7 +37,7 @@
                 </el-form-item>
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="学院" prop="academy">
+                        <el-form-item error="" label="学院" prop="academy">
                             <el-input v-model="form.academy"></el-input>
                         </el-form-item>
                     </el-col>
@@ -99,6 +106,8 @@
             Promise.all([getUserInfo(), getForm()]).then(r => {
                 this.form = this.data2Form(r[0], r[1])
             })
+            
+            this.form2Data(this.form)
         },
         computed: {
             secondIntentionCascaderOptions() {
@@ -178,15 +187,15 @@
                 return Object.assign({}, userData, joinData)
             },
             form2Data(form) {
-                let userData = {}, joinData = {}
-
+                let userData = {},joinData = {};
+                    
                 (['name', 'sex', 'stu_no', 'campus', 'academy', 'from', 'tel', 'qq']).forEach(key => {
                     userData[key] = form[key]
                 })
 
                 joinData = {
-                    intention: form.intention[1],
-                    intention2: form.intention[2] && form.intention2[1],
+                    intention: form.intention && form.intention[1],
+                    intention2: form.intention2 && form.intention2[1],
                     introduction: form.introduction
                 }
 

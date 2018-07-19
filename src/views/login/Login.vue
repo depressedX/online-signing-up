@@ -6,7 +6,7 @@
                 <el-form-item label="学号" prop="stu_no">
                     <el-input type="text" v-model="form.stu_no"/>
                 </el-form-item>
-                <el-form-item label="密码" prop="password">
+                <el-form-item label="密码" prop="password" @keyup.enter.native="submit">
                     <el-input type="password" v-model="form.password"/>
                 </el-form-item>
                 <el-form-item>
@@ -48,12 +48,16 @@
                 this.$refs.form.validate()
                     .then(() => login(form.stu_no, form.password).then(() => {
                         this.$message('登陆成功 即将跳转');
+                        this.$router.push('/home')
                     }, e => {
                         this.$message('登录失败 error:' + e.message);
                     }))
                     .finally(() => {
                         this.submitting = false
                     })
+            },
+            test(){
+                alert('df')
             }
         }
     }

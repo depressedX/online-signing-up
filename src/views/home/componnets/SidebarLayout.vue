@@ -4,8 +4,11 @@
             <img src="../../../assets/logo.png"/>
         </div>
         <div class="info-container">
-            <p class="name">成曦泽</p>
-            <p class="stuId">2016600000</p>
+            <template v-if="!loading">
+                <p class="name">{{name}}</p>
+                <p class="stuId">{{stu_no}}</p>
+            </template>
+            <p v-else><i class="el-icon-loading"/></p>
         </div>
         <hr/>
         <el-menu
@@ -27,8 +30,26 @@
 </template>
 
 <script>
+    import {getUserInfo} from "../../../resource";
+
     export default {
-        name: "SidebarLayout"
+        name: "SidebarLayout",
+        created() {
+            this.loading = true
+            getUserInfo().then(userInfo => {
+                this.name = userInfo.name
+                this.stu_no = userInfo.stu_no
+            }).finally(() => {
+                this.loading = false
+            })
+        },
+        data() {
+            return {
+                name: '',
+                stu_no: '',
+                loading: true
+            }
+        }
     }
 </script>
 
@@ -36,11 +57,11 @@
     @import "../../../style/variables";
 
     .sidebar-layout {
-        
+
         position: relative;
         box-sizing: border-box;
         min-height: 100vh;
-        
+
         padding: {
             /*为顶部关闭按钮预留空间*/
             top: $top-bar-height;
@@ -60,8 +81,8 @@
                 text-align: center;
             }
         }
-        
-        .logout-container{
+
+        .logout-container {
             width: 100%;
             position: absolute;
             bottom: 0;

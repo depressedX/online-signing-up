@@ -10,7 +10,7 @@ let http = axios.create({
 
 // 请求返回时的Error
 class RequestError extends Error {
-    constructor(message,status) {
+    constructor(message, status) {
         super()
         this.message = message
         this.status = status
@@ -22,17 +22,29 @@ const handleResponse = resp => {
     if (data.status === 200) {
         return data.data
     } else {
-        throw new RequestError(resp.data.message,resp.data.status)
+        throw new RequestError(resp.data.message, resp.data.status)
     }
 }
 
-export function login(stu_no,password) {
-    return http.post('login',qs.stringify({stu_no,password}))
+const loginStatusKey = 'hasLoggedIn'
+
+export function login(stu_no, password) {
+    return http.post('login', qs.stringify({stu_no, password}))
         .then(handleResponse)
+        .then(() => {
+            localStorage.setItem(loginStatusKey, 'true')
+        })
+}
+
+export function hasLoggedIn() {
+    return localStorage.getItem(loginStatusKey) === 'true' ? true : false
 }
 
 export function logout() {
     return http.post('logout').then(handleResponse)
+        .then(() => {
+            localStorage.setItem(loginStatusKey, null)
+        })
 }
 
 // 获取用户信息
@@ -46,7 +58,7 @@ export function getUserInfo() {
  * @return {Promise<AxiosResponse<any>>}
  */
 export function updateUserInfo(bundle) {
-    return http.post('user',qs.stringify(bundle)).then(handleResponse)
+    return http.post('user', qs.stringify(bundle)).then(handleResponse)
 }
 
 export function getSigningUpDeadline() {
@@ -55,7 +67,7 @@ export function getSigningUpDeadline() {
 
 // 提交报名表
 export function submitForm(form) {
-    return http.post('form',form).then(handleResponse)
+    return http.post('form', form).then(handleResponse)
 }
 
 // 获取报名表
