@@ -9,6 +9,13 @@
                         type="info">
                 </el-alert>
             </el-row>
+            <el-row style="margin: .5em" v-if="this.deadlineFormatted">
+                <el-alert
+                        :closable="false"
+                        :title="`报名截止至：${deadlineFormatted}`"
+                        type="info">
+                </el-alert>
+            </el-row>
             <el-form ref="form" :rules="rules" :model="form" label-width="80px" label-position="left">
                 <el-form-item label="姓名" prop="name">
                     <el-input v-model="form.name" disabled></el-input>
@@ -82,7 +89,7 @@
 
 <script>
     import {groups, departments, campus} from "../../manifest";
-    import {getForm, getUserInfo, submitForm, updateUserInfo} from "../../resource";
+    import {getForm, getSigningUpDeadline, getUserInfo, submitForm, updateUserInfo} from "../../resource";
 
     const intentionCascaderOptions = groups.map(group => ({
         value: group.code,
@@ -106,24 +113,12 @@
             Promise.all([getUserInfo(), getForm()]).then(r => {
                 this.form = this.data2Form(r[0], r[1])
             })
-            
+
             this.form2Data(this.form)
-        },
-        computed: {
-            secondIntentionCascaderOptions() {
-                if (!this.form.intention) {
-                    return []
-                }
-                return this.intentionCascaderOptions.map(group => (
-                        group.value === this.form.intention[0] ?
-                            {
-                                value: group.value,
-                                label: group.label,
-                                children: group.children.filter(o => o.value !== this.form.intention[1])
-                            } : group
-                    )
-                )
-            }
+
+            getSigningUpDeadline().then(t => {
+                this.deadline = new Date(t)
+            })
         },
         data() {
             return {
@@ -131,6 +126,8 @@
                 campusOptions,
 
                 submiting: false,
+
+                deadline: null,
 
                 form: {
                     name: '',
@@ -164,6 +161,27 @@
                 }
             }
         },
+        computed: {
+            deadlineFormatted() {
+                let t = this.deadline
+                return t ? `${t.getMonth() + 1}月${t.getDate()}日` : null
+            },
+
+            secondIntentionCascaderOptions() {
+                if (!this.form.intention) {
+                    return []
+                }
+                return this.intentionCascaderOptions.map(group => (
+                        group.value === this.form.intention[0] ?
+                            {
+                                value: group.value,
+                                label: group.label,
+                                children: group.children.filter(o => o.value !== this.form.intention[1])
+                            } : group
+                    )
+                )
+            }
+        },
         methods: {
             onSubmit() {
                 this.submiting = true
@@ -187,8 +205,8 @@
                 return Object.assign({}, userData, joinData)
             },
             form2Data(form) {
-                let userData = {},joinData = {};
-                    
+                let userData = {}, joinData = {};
+
                 (['name', 'sex', 'stu_no', 'campus', 'academy', 'from', 'tel', 'qq']).forEach(key => {
                     userData[key] = form[key]
                 })
