@@ -1,4 +1,5 @@
 import axios from "axios"
+import qs from 'qs'
 
 const API_BASE_URL = '/api/v1/'
 
@@ -9,9 +10,10 @@ let http = axios.create({
 
 // 请求返回时的Error
 class RequestError extends Error {
-    constructor(message) {
+    constructor(message,status) {
         super()
         this.message = message
+        this.status = status
     }
 }
 
@@ -20,12 +22,13 @@ const handleResponse = resp => {
     if (data.status === 200) {
         return data.data
     } else {
-        throw new RequestError(resp.data.message)
+        throw new RequestError(resp.data.message,resp.data.status)
     }
 }
 
-export function login(studentId,password) {
-    return http.post('login',qs.stringify({studentId,password})).then(handleResponse)
+export function login(stu_no,password) {
+    return http.post('login',qs.stringify({stu_no,password}))
+        .then(handleResponse)
 }
 
 export function logout() {

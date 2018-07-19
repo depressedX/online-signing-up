@@ -162,14 +162,15 @@
                 let {userData, joinData} = this.form2Data(this.form)
 
                 // 有空加个验证  是否修改过个人信息  现在先不验证了
-                updateUserInfo(userData)
-                    .then(submitForm.bind(undefined, joinData))
-                    .then(() => {
-                        alert('提交成功')
-                    })
-                    .finally(() => {
-                        this.submiting = false
-                    })
+                this.$refs.form.validate().then(() =>
+                    updateUserInfo(userData)
+                        .then(submitForm.bind(undefined, joinData))
+                        .then(() => {
+                            alert('提交成功')
+                        })
+                        .finally(() => {
+                            this.submiting = false
+                        }))
             },
             data2Form(userData, joinData) {
                 joinData.intention = joinData.intention &&
