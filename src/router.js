@@ -67,7 +67,6 @@ const router = new Router({
 export default router
 
 router.beforeEach((to, from, next) => {
-
     //404
     if (to.matched.length === 0) {
         next('/404')
@@ -85,7 +84,11 @@ router.beforeEach((to, from, next) => {
     }
     else if (to.name==='login'){
         if (hasLoggedIn()) {
-            next('/home')
+            next({
+                name:'home'
+            })
+        }else {
+            next()
         }
     } 
     else {

@@ -3,10 +3,10 @@
         <app-bar>试用期作业</app-bar>
         <main>
             <ul v-if="workData.length>0">
-                <li v-for="data in workData" :key="data.intention">
-                    <p>{{matchedDepartmentName(data.intention)}}</p>
-                    <ul v-if="data.works.length>0">
-                        <li v-for="(work,i) in data.works" :key="i">名称：{{work.name}} 分数：{{work.score}}</li>
+                <li v-for="group in workData" :key="group.intention">
+                    <p>{{group.intention.map(d=>matchedDepartmentName(d)).join(',')}}</p>
+                    <ul v-if="group.scores.length>0">
+                        <li v-for="(score,idx) in group.scores" :key="idx">第{{idx+1}}次作业 分数：{{score}}</li>
                     </ul>
                     <el-alert v-else title="当前部门暂无作业" type="info"/>
                 </li>
@@ -23,9 +23,14 @@
     export default {
         name: "Work",
         created() {
-            getWorkExecution().then(data => {
-                this.workData = data
-            })
+            getWorkExecution()
+                .then(data => Array.isArray(data) ? data : [])
+                .then(data => {
+                    this.workData = data.map(group => ({
+                        intention: group.intention.split(',').map(s => Number(s)),
+                        scores: group.scores.split(',').map(s => Number(s))
+                    }))
+                })
         },
         data() {
             return {

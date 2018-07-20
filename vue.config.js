@@ -10,7 +10,7 @@ module.exports={
         proxy: {
             "/api/v1": {
                 target: "http://119.29.52.224:8083",
-                pathRewrite: {"^/api/v1": ""}
+                // pathRewrite: {"^/api/v1": ""}
             }
         }
     }

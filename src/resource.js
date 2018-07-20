@@ -5,7 +5,7 @@ const API_BASE_URL = '/api/v1/'
 
 let http = axios.create({
     baseURL: API_BASE_URL,
-    timeout: 1000,
+    timeout: 2000,
 })
 
 // 请求返回时的Error
@@ -32,18 +32,18 @@ export function login(stu_no, password) {
     return http.post('login', qs.stringify({stu_no, password}))
         .then(handleResponse)
         .then(() => {
-            localStorage.setItem(loginStatusKey, 'true')
+            sessionStorage.setItem(loginStatusKey, 'true')
         })
 }
 
 export function hasLoggedIn() {
-    return localStorage.getItem(loginStatusKey) === 'true' ? true : false
+    return sessionStorage.getItem(loginStatusKey) === 'true' ? true : false
 }
 
 export function logout() {
     return http.post('logout').then(handleResponse)
         .then(() => {
-            localStorage.setItem(loginStatusKey, null)
+            sessionStorage.setItem(loginStatusKey, null)
         })
 }
 

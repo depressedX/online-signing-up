@@ -63,10 +63,10 @@
                 </el-form-item>
                 <el-form-item>
                     <el-cascader
-                            :disabled="form.intention?false:true"
-                            expand-trigger="hover"
-                            :options="secondIntentionCascaderOptions"
-                            v-model="form.intention2">
+                    :disabled="form.intention?false:true"
+                    expand-trigger="hover"
+                    :options="secondIntentionCascaderOptions"
+                    v-model="form.intention2">
                     </el-cascader>
                 </el-form-item>
                 <el-form-item label="描述一下可爱的自己吧！" class="form__introduction">
@@ -111,10 +111,11 @@
         name: "Join",
         created() {
             Promise.all([getUserInfo(), getForm()]).then(r => {
-                this.form = this.data2Form(r[0], r[1])
+                let t = this.data2Form(r[0], r[1])
+                Object.keys(this.form).forEach(key => {
+                    t[key] !== null && t[key] !== undefined && (this.form[key] = t[key])
+                })
             })
-
-            this.form2Data(this.form)
 
             getSigningUpDeadline().then(t => {
                 this.deadline = new Date(t)
@@ -195,13 +196,17 @@
                         .then(() => {
                             alert('提交成功')
                         })
-                        .finally(() => {
-                            this.submiting = false
-                        }))
+                ).finally(() => {
+                    this.submiting = false
+                })
             },
             data2Form(userData, joinData) {
+                userData.campus = Number(userData.campus)
+                userData.sex = userData.sex === '男' ? true : false //true男  false女
                 joinData.intention = joinData.intention &&
-                    [Math.floor(joinData.intention / 10), joinData.intention % 10]
+                    [Math.floor(joinData.intention / 10), Number(joinData.intention)]
+                joinData.intention2 = joinData.intention2 &&
+                    [Math.floor(joinData.intention2 / 10), Number(joinData.intention2)]
                 return Object.assign({}, userData, joinData)
             },
             form2Data(form) {
@@ -210,10 +215,12 @@
                 (['name', 'sex', 'stu_no', 'campus', 'academy', 'from', 'tel', 'qq']).forEach(key => {
                     userData[key] = form[key]
                 })
+                userData.campus = String(userData.campus)
+                userData.sex = userData.sex ? '男' : '女' //true男  false女
 
                 joinData = {
-                    intention: form.intention && form.intention[1],
-                    intention2: form.intention2 && form.intention2[1],
+                    intention: form.intention && String(form.intention[1]),
+                    intention2: form.intention2 && String(form.intention2[1]),
                     introduction: form.introduction
                 }
 
