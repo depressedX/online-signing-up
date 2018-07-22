@@ -17,13 +17,17 @@ const router = new Router({
             name: 'home',
             component: _('home'),
             meta: {
-                requiresAuth: true
+                requiresAuth: true,
+                title: '首页'
             }
         },
         {
             path: '/login',
             name: 'login',
-            component: _('login')
+            component: _('login'),
+            meta: {
+                title: '登陆'
+            }
         },
         {
             path: '/group',
@@ -31,7 +35,8 @@ const router = new Router({
             component: _('group'),
             props: route => ({id: route.query.id && Number(route.query.id) || 0}),
             meta: {
-                requiresAuth: true
+                requiresAuth: true,
+                title: '事业群'
             }
         },
         {
@@ -39,7 +44,8 @@ const router = new Router({
             name: 'join',
             component: _('join'),
             meta: {
-                requiresAuth: true
+                requiresAuth: true,
+                title: '加入我们'
             }
         },
         {
@@ -47,7 +53,8 @@ const router = new Router({
             name: 'work',
             component: _('work'),
             meta: {
-                requiresAuth: true
+                requiresAuth: true,
+                title: '试用期作业'
             }
         },
         {
@@ -55,12 +62,16 @@ const router = new Router({
             name: 'process',
             component: _('process'),
             meta: {
-                requiresAuth: true
+                requiresAuth: true,
+                title: '招新进程'
             }
         },
         {
-            path:'/404',
-            component:vc('./PageNotFound').default
+            path: '/404',
+            component: vc('./PageNotFound').default,
+            meta: {
+                title: '404'
+            }
         }
     ]
 })
@@ -70,9 +81,13 @@ router.beforeEach((to, from, next) => {
     //404
     if (to.matched.length === 0) {
         next('/404')
+        return
     }
+
+    document.title = to.matched[0].meta.title
+
     // 需要权限
-    else if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
         if (!hasLoggedIn()) {
             next({
                 path: '/login',
@@ -82,16 +97,16 @@ router.beforeEach((to, from, next) => {
             next()
         }
     }
-    else if (to.name==='login'){
+    else if (to.name === 'login') {
         if (hasLoggedIn()) {
             next({
-                name:'home'
+                name: 'home'
             })
-        }else {
+        } else {
             next()
         }
-    } 
+    }
     else {
         next() // 确保一定要调用 next()
-    } 
+    }
 })

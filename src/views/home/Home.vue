@@ -3,8 +3,10 @@
         <el-button
                 class="toggle-button"
                 type="text"
-                :class="[drawerOpen?'el-icon-close':'el-icon-arrow-right']"
-                @click="drawerOpen=!drawerOpen"></el-button>
+                style="width: 3em"
+                @click="drawerOpen=!drawerOpen">
+            <img src="../../assets/icon_menu.png" style="width: 1em;height: 1em"/>
+        </el-button>
         <drawer-layout
                 @slide-end="handleSlideEnd"
                 ref="drawer"
