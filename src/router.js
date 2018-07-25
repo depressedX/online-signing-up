@@ -78,6 +78,9 @@ const router = new Router({
 export default router
 
 router.beforeEach((to, from, next) => {
+    next()
+    return
+    
     //404
     if (to.matched.length === 0) {
         next('/404')

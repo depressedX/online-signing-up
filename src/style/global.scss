@@ -1,5 +1,22 @@
 body {
   margin: 0;
+  color: white;
+  font-family: "Microsoft YaHei UI",Arial, Helvetica, sans-serif;
+  background: #a6a6a6 url("/bg_1.jpg") ;
+  background-repeat: no-repeat;
+  background-position-y: bottom;
+  background-size: cover;
+  background-position-x: 50%;
+  min-height: 100vh;
+}
+body:before{
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(50,50,50,.35);
 }
 a{
   text-decoration: none;

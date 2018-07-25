@@ -5,7 +5,7 @@
                 type="text"
                 style="width: 3em"
                 @click="drawerOpen=!drawerOpen">
-            <img src="../../assets/icon_menu.png" style="width: 1em;height: 1em"/>
+            <icon :src="drawerOpen?backIcon:menuIcon" />
         </el-button>
         <drawer-layout
                 @slide-end="handleSlideEnd"
@@ -25,21 +25,24 @@
     import {DrawerLayout} from 'vue-drawer-layout'
     import SidebarLayout from "./componnets/SidebarLayout";
     import MainLayout from "./componnets/MainLayout";
+    import Icon from "../../components/Icon";
 
     export default {
         name: 'home',
         components: {
+            Icon,
             MainLayout,
             SidebarLayout,
             DrawerLayout
         },
         data() {
             return {
+                menuIcon: '/icon_menu2.png', backIcon: '/icon_back.png',
                 drawerOpen: false
             }
         },
-        methods:{
-            handleSlideEnd(v){
+        methods: {
+            handleSlideEnd(v) {
                 this.drawerOpen = v
             }
         },
@@ -52,12 +55,16 @@
     }
 </script>
 <style lang="scss" scoped>
-    .home{
-        position: absolute;
-        width: 100%;
-        height: 100%;
+    .home {
+        color: white;
+        
+        .drawer{
+            overflow: scroll;
+            height: 100%;
+        }
     }
-    .toggle-button{
+
+    .toggle-button {
         position: relative;
         z-index: 999;
     }
