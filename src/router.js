@@ -70,7 +70,7 @@ const router = new Router({
             name: 'login',
             component: _('login'),
             meta: {
-                title: '登陆'
+                title: '登录'
             }
         },
         
