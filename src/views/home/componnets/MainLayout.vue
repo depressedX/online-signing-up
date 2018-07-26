@@ -71,7 +71,7 @@
 
             margin-top: 50px;
             
-            background-image: url("/src/assets/bg_join_us.png");
+            background-image: url("../../../assets/bg_join_us.png");
             background-size: cover;
             position: relative;
             
@@ -145,7 +145,7 @@
         @for $i from 1 through 5 {
             .group-button-#{$i} {
                 &:before {
-                    background-image: url("/ret_#{$i}.png");
+                    background-image: url("../../../assets/ret_#{$i}.png");
                     background-size: cover;
                 }
             }

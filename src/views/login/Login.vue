@@ -1,6 +1,6 @@
 <template>
     <div class="login-container">
-        <div class="avatar-container"><img class="avatar" src="/src/assets/logo.png"/></div>
+        <div class="avatar-container"><img class="avatar" src="../../assets/logo.png"/></div>
         <el-form :model="form" :rules="rules" ref="form">
             <el-form-item prop="stu_no">
                 <el-input type="text" v-model="form.stu_no" placeholder="学号">

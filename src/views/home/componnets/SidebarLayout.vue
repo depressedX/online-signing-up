@@ -1,7 +1,7 @@
 <template>
     <div class="sidebar-layout">
         <div class="avatar-container">
-            <img src="/src/assets/logo.png"/>
+            <img src="../../../assets/logo.png"/>
         </div>
         <div class="info-container">
             <template v-if="!loading">
