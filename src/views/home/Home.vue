@@ -62,7 +62,7 @@
     .home {
         color: white;
         
-        .drawer{
+        .drawer,.content{
             overflow: scroll;
             height: 100%;
         }

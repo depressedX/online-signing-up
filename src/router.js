@@ -10,6 +10,50 @@ Vue.use(Router)
 
 const _ = component => vc(`./${toFirstWordLowerCase(component)}/${toFirstWordUpperCase(component)}.vue`).default
 
+// 事业群介绍相关路由
+const groupRoutes = [
+    {
+        path: '/group/tech',
+        component: vc('./group/Tech').default,
+        meta: {
+            requiresAuth: true,
+            title: '部门介绍'
+        }
+    },
+    {
+        path: '/group/media',
+        component: vc('./group/Media').default,
+        meta: {
+            requiresAuth: true,
+            title: '部门介绍'
+        }
+    },
+    {
+        path: '/group/application',
+        component: vc('./group/Application').default,
+        meta: {
+            requiresAuth: true,
+            title: '部门介绍'
+        }
+    },
+    {
+        path: '/group/team',
+        component: vc('./group/Team').default,
+        meta: {
+            requiresAuth: true,
+            title: '部门介绍'
+        }
+    },
+    {
+        path: '/group/yiban',
+        component: vc('./group/YiBan').default,
+        meta: {
+            requiresAuth: true,
+            title: '部门介绍'
+        }
+    },
+]
+
 const router = new Router({
     routes: [
         {
@@ -29,16 +73,9 @@ const router = new Router({
                 title: '登陆'
             }
         },
-        {
-            path: '/group',
-            name: 'group',
-            component: _('group'),
-            props: route => ({id: route.query.id && Number(route.query.id) || 0}),
-            meta: {
-                requiresAuth: true,
-                title: '事业群'
-            }
-        },
+        
+        ...groupRoutes,
+
         {
             path: '/join',
             name: 'join',
@@ -78,16 +115,16 @@ const router = new Router({
 export default router
 
 router.beforeEach((to, from, next) => {
-    next()
-    return
-    
+
     //404
     if (to.matched.length === 0) {
         next('/404')
         return
     }
 
-    document.title = to.matched[0].meta.title
+    // 更改title
+    let titleRoute = to.matched.find(s => s.meta.title)
+    titleRoute && (document.title = titleRoute.meta.title)
 
     // 需要权限
     if (to.matched.some(record => record.meta.requiresAuth)) {

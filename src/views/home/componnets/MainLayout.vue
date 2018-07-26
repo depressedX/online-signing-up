@@ -4,31 +4,31 @@
             <div class="row row-2">
                 <router-link
                         class="group-button group-button-1"
-                        to="/group?id=1">
+                        to="/group/tech">
                     <div class="text">技术工程<br/>事业群</div>
                 </router-link>
                 <router-link
                         class="group-button group-button-2"
-                        to="/group?id=3">
+                        to="/group/media">
                     <div class="text">网络媒体<br/>事业群</div>
                 </router-link>
             </div>
             <div class="row row-1">
                 <router-link
                         class="group-button group-button-3"
-                        to="/group?id=5">
+                        to="/group/yiban">
                     <div class="text">易班运营<br/>中心</div>
                 </router-link>
             </div>
             <div class="row row-2">
                 <router-link
                         class="group-button group-button-4"
-                        to="/group?id=2">
+                        to="/group/application">
                     <div class="text">应用服务<br/>事业群</div>
                 </router-link>
                 <router-link
                         class="group-button group-button-5"
-                        to="/group?id=4">
+                        to="/group/team">
                     <div class="text">团队发展<br/>事业群</div>
                 </router-link>
             </div>
@@ -54,6 +54,8 @@
     @import "../../../style/variables.scss";
 
     .main-layout {
+        /*height: 100%;*/
+        /*overflow: scroll;*/
         width: 325px;
         margin: auto;
         font-size: 18px;
@@ -69,7 +71,7 @@
             border-radius: 20px;
             padding: 1em 0;
 
-            margin-top: 50px;
+            margin: 50px 0;
             
             background-image: url("../../../assets/bg_join_us.png");
             background-size: cover;

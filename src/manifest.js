@@ -27,7 +27,7 @@ export const departments = [
 ]
 
 export const processStage = [
-    {code: 1, message: '已提交申请（截止日期之前）'},
+    {code: 1, message: '已提交申请'},
     {code: 2, message: '面试通过，进入试用期'},
     {code: 3, message: '面试未通过'},
     {code: 4, message: '未通过试用期'},
@@ -42,3 +42,5 @@ export const campus = [
     {code: 4, name: '趵突泉校区'},
     {code: 5, name: '千佛山校区'},
 ]
+
+export const getGroupByCode = code => groups.find(dd => dd.code === code)

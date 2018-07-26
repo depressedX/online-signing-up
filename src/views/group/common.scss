@@ -1,0 +1,31 @@
+.group{
+  color: white;
+  font-size: .875em;
+  position: relative;
+  main{
+    padding: 1em 2em;
+    position: relative;
+  }
+  
+  //固定位置的背景  以及遮罩
+  .bg{
+
+    position: fixed;
+    /*为浏览器留出安全距离  （否则滑动过程中可能出现空白）*/
+    left: 0px;
+    right: 0px;
+    top:-80px;
+    bottom: -80px;
+    
+    &:before{
+
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background-color: rgba(50,50,50,.3);
+    }
+  }
+}

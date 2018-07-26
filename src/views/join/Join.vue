@@ -1,11 +1,11 @@
 <template>
     <div class="join">
         <app-bar>报名</app-bar>
-        <main>
+        <main class="join-content">
             <el-row style="margin: .5em">
                 <el-alert
                         :closable="false"
-                        title="团队事业群不在软件园校区纳新！请软件园同学不要误报"
+                        title="团队事业群不在软件园校区纳新！请软件园同学不要误报!"
                         type="info">
                 </el-alert>
             </el-row>
@@ -16,11 +16,11 @@
                         type="info">
                 </el-alert>
             </el-row>
-            <el-form ref="form" :rules="rules" :model="form" label-width="80px" label-position="left">
-                <el-form-item label="姓名" prop="name">
-                    <el-input v-model="form.name" disabled></el-input>
+            <el-form ref="form" :rules="rules" :model="form" label-width="55px" label-position="left">
+                <el-form-item prop="name" label="姓名" class="form-item bottom-line">
+                    <el-input v-model="form.name"></el-input>
                 </el-form-item>
-                <el-form-item label="性别">
+                <el-form-item label="性别" class="form-item bottom-line">
                     <el-switch
                             v-model="form.sex"
                             active-text="男"
@@ -29,11 +29,11 @@
                             inactive-text="女">
                     </el-switch>
                 </el-form-item>
-                <el-form-item label="学号">
-                    <el-input v-model="form.stu_no" disabled></el-input>
+                <el-form-item label="学号" class="form-item bottom-line">
+                    <el-input v-model="form.stu_no"></el-input>
                 </el-form-item>
-                <el-form-item label="校区" prop="campus">
-                    <el-select v-model="form.campus" placeholder="选择校区">
+                <el-form-item label="校区" prop="campus" class="form-item bottom-line">
+                    <el-select v-model="form.campus" placeholder="" style="width: 100%">
                         <el-option
                                 v-for="campus in campusOptions"
                                 :key="campus.value"
@@ -42,46 +42,39 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-row>
-                    <el-col :span="12">
-                        <el-form-item error="" label="学院" prop="academy">
-                            <el-input v-model="form.academy"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item label="家乡" prop="from">
-                            <el-input v-model="form.from"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-form-item label="我想加入" prop="intention">
+                <el-form-item label="学院" prop="academy" class="form-item bottom-line">
+                    <el-input v-model="form.academy"></el-input>
+                </el-form-item>
+                <el-form-item label="家乡" prop="from" class="form-item bottom-line">
+                    <el-input v-model="form.from"></el-input>
+                </el-form-item>
+                <el-form-item label="电话" prop="tel" class="form-item bottom-line">
+                    <el-input v-model="form.tel"></el-input>
+                </el-form-item>
+                <el-form-item label="QQ" prop="qq" class="form-item bottom-line">
+                    <el-input v-model="form.qq"></el-input>
+                </el-form-item>
+                <el-form-item prop="intention" label="我想加入" class="form-item intention">
                     <el-cascader
                             expand-trigger="hover"
                             :options="intentionCascaderOptions"
                             v-model="form.intention">
                     </el-cascader>
                 </el-form-item>
-                <el-form-item>
+                <el-form-item class="form-item intention2">
                     <el-cascader
-                    :disabled="form.intention?false:true"
-                    expand-trigger="hover"
-                    :options="secondIntentionCascaderOptions"
-                    v-model="form.intention2">
+                            :disabled="form.intention?false:true"
+                            expand-trigger="hover"
+                            :options="secondIntentionCascaderOptions"
+                            v-model="form.intention2">
                     </el-cascader>
                 </el-form-item>
-                <el-form-item label="描述一下可爱的自己吧！" class="form__introduction">
+                <el-form-item label="描述一下可爱的自己吧！" class="form-item description">
                     <el-input type="textarea" v-model="form.introduction"></el-input>
                 </el-form-item>
-                <el-form-item label="手机">
-                    <el-input v-model="form.tel"></el-input>
-                </el-form-item>
-                <el-form-item label="QQ">
-                    <el-input v-model="form.qq"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="onSubmit" :disabled="submiting">立即创建</el-button>
-                    <el-button>取消</el-button>
-                </el-form-item>
+                <el-button type="primary" class="confirm-button" @click="onSubmit" :disabled="submiting"><i
+                        v-if="submiting" class="el-icon-loading"/>提交
+                </el-button>
             </el-form>
         </main>
     </div>
@@ -110,12 +103,17 @@
     export default {
         name: "Join",
         created() {
-            Promise.all([getUserInfo(), getForm()]).then(r => {
-                let t = this.data2Form(r[0], r[1])
-                Object.keys(this.form).forEach(key => {
-                    t[key] !== null && t[key] !== undefined && (this.form[key] = t[key])
-                })
-            })
+            Promise.all([getUserInfo().catch(e => ({})), getForm().catch(e => ({}))])
+                .then(r => {
+                        let t = this.data2Form(r[0], r[1])
+                        Object.keys(this.form).forEach(key => {
+                            t[key] !== null && t[key] !== undefined && (this.form[key] = t[key])
+                        })
+                    },
+                    errors => {
+                        this.$message.error('网络请求错误，请重新加载');
+                        this.$router.go(-1)
+                    })
 
             getSigningUpDeadline().then(t => {
                 this.deadline = new Date(t)
@@ -194,14 +192,14 @@
                     updateUserInfo(userData)
                         .then(submitForm.bind(undefined, joinData))
                         .then(() => {
-                            alert('提交成功')
+                            alert('提交成功');
                         })
                 ).finally(() => {
                     this.submiting = false
                 })
             },
             data2Form(userData, joinData) {
-                userData.campus = Number(userData.campus)
+                userData.campus = userData.campus ? Number(userData.campus) : null
                 userData.sex = userData.sex === '男' ? true : false //true男  false女
                 joinData.intention = joinData.intention &&
                     [Math.floor(joinData.intention / 10), Number(joinData.intention)]
@@ -233,16 +231,64 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    .join-content {
+        position: relative;
+        padding: 0 2em 3em 2em;
 
+        .form-item.bottom-line {
+            border-bottom: 2px solid white;
+        }
+
+        .confirm-button {
+            width: 100%;
+            position: relative;
+        }
+    }
 </style>
 <style lang="scss">
+    @import "../../style/variables";
+
     .join {
-        .form__introduction {
+        color: #d7d7d7;
+
+        .el-input--prefix .el-input__inner {
+            padding-left: 3em !important;
+        }
+
+        input.el-input__inner {
+
+            border-width: 0;
+            border-radius: 0;
+
+            background-color: transparent !important;
+        }
+
+        .el-textarea__inner {
+            border: 1px solid white;
+            background-color: transparent;
+        }
+
+        /*标签颜色*/
+        .el-form-item__label {
+            color: inherit;
+        }
+
+        /*我想加入\描述\我想加入2 单独处理*/
+        .form-item.intention, .form-item.description, .form-item.intention2 {
+            .el-form-item__content {
+                margin-left: 0 !important;
+            }
+        }
+
+        /*标签占满行*/
+        .form-item.intention, .form-item.description, .form-item.intention2 {
             .el-form-item__label {
                 float: none;
                 width: 100% !important;
             }
         }
+
+        @include primary-button
     }
 </style> 

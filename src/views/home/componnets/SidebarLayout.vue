@@ -56,8 +56,8 @@
                 bubbleIcon,profileIcon,exitIcon,
                 
                 
-                name: '刘鹏昊',
-                stu_no: '201600000000',
+                name: '',
+                stu_no: '',
                 loading: true
             }
         },

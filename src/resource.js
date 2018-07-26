@@ -82,5 +82,5 @@ export function getProcess() {
 
 // 获取试用期内作业完成情况
 export function getWorkExecution() {
-    return http.get('work').then(handleResponse)
+    return http.get('work').then(handleResponse).then(data => Array.isArray(data) ? data : [])
 }
