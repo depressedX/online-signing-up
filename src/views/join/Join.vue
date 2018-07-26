@@ -194,7 +194,9 @@
                         .then(() => {
                             alert('提交成功');
                         })
-                ).finally(() => {
+                ).then(() => {
+                    this.submiting = false
+                }, () => {
                     this.submiting = false
                 })
             },

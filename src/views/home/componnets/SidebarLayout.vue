@@ -26,7 +26,10 @@
         </el-menu>
         <div class="logout-container">
             <hr/>
-            <el-button @click="logout" type="text"><icon :src="exitIcon"/>退出登录</el-button>
+            <el-button @click="logout" type="text">
+                <icon :src="exitIcon"/>
+                退出登录
+            </el-button>
         </div>
     </div>
 </template>
@@ -34,7 +37,7 @@
 <script>
     import {getUserInfo, logout} from "../../../resource";
     import Icon from "../../../components/Icon";
-    
+
     import bubbleIcon from '../../../assets/icon_bubble.png'
     import profileIcon from '../../../assets/icon_profile2.png'
     import exitIcon from '../../../assets/icon_exit.png'
@@ -47,15 +50,19 @@
             getUserInfo().then(userInfo => {
                 this.name = userInfo.name
                 this.stu_no = userInfo.stu_no
-            }).finally(() => {
+
+
+            }).then(() => {
+                this.loading = false
+            }, () => {
                 this.loading = false
             })
         },
         data() {
             return {
-                bubbleIcon,profileIcon,exitIcon,
-                
-                
+                bubbleIcon, profileIcon, exitIcon,
+
+
                 name: '',
                 stu_no: '',
                 loading: true
@@ -148,7 +155,7 @@
         }
         .el-button {
             font-size: 1em;
-            color:inherit;
+            color: inherit;
         }
     }
 </style> 

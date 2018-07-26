@@ -57,7 +57,9 @@
                         this.$message('登录失败 error:' + e.message);
                     }), e => {
                     })
-                    .finally(() => {
+                    .then(() => {
+                        this.submitting = false
+                    }, () => {
                         this.submitting = false
                     })
             }
