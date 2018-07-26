@@ -71,7 +71,7 @@
 
             margin-top: 50px;
             
-            background-image: url("/bg_join_us.png");
+            background-image: url("/src/assets/bg_join_us.png");
             background-size: cover;
             position: relative;
             

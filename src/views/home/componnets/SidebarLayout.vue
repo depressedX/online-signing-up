@@ -1,7 +1,7 @@
 <template>
     <div class="sidebar-layout">
         <div class="avatar-container">
-            <img src="/logo.png"/>
+            <img src="/src/assets/logo.png"/>
         </div>
         <div class="info-container">
             <template v-if="!loading">
@@ -16,17 +16,17 @@
                 router
                 default-active="1">
             <el-menu-item index="/work">
-                <icon src="/icon_profile2.png"/>
+                <icon :src="profileIcon"/>
                 <span slot="title">作业情况</span>
             </el-menu-item>
             <el-menu-item index="/process">
-                <icon src="/icon_bubble.png"/>
+                <icon :src="bubbleIcon"/>
                 <span slot="title">招新进程</span>
             </el-menu-item>
         </el-menu>
         <div class="logout-container">
             <hr/>
-            <el-button @click="logout" type="text"><icon src="/icon_exit.png"/>退出登录</el-button>
+            <el-button @click="logout" type="text"><icon :src="exitIcon"/>退出登录</el-button>
         </div>
     </div>
 </template>
@@ -34,6 +34,10 @@
 <script>
     import {getUserInfo, logout} from "../../../resource";
     import Icon from "../../../components/Icon";
+    
+    import bubbleIcon from '../../../assets/icon_bubble.png'
+    import profileIcon from '../../../assets/icon_profile2.png'
+    import exitIcon from '../../../assets/icon_exit.png'
 
     export default {
         name: "SidebarLayout",
@@ -49,6 +53,9 @@
         },
         data() {
             return {
+                bubbleIcon,profileIcon,exitIcon,
+                
+                
                 name: '刘鹏昊',
                 stu_no: '201600000000',
                 loading: true

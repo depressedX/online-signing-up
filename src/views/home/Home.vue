@@ -26,6 +26,10 @@
     import SidebarLayout from "./componnets/SidebarLayout";
     import MainLayout from "./componnets/MainLayout";
     import Icon from "../../components/Icon";
+    
+    import menuIcon from '../../assets/icon_menu.png'
+    import backIcon from '../../assets/icon_back.png'
+    
 
     export default {
         name: 'home',
@@ -37,7 +41,7 @@
         },
         data() {
             return {
-                menuIcon: '/icon_menu2.png', backIcon: '/icon_back.png',
+                menuIcon,backIcon,
                 drawerOpen: false
             }
         },

@@ -1,6 +1,6 @@
 <template>
     <el-row class="app-bar" type="flex" align="middle">
-        <el-col :span="4"><el-button style="vertical-align: middle;width: 3em" type="text" @click="back"><icon src="/icon_back.png"/></el-button></el-col>
+        <el-col :span="4"><el-button style="vertical-align: middle;width: 3em" type="text" @click="back"><icon :src="backIcon"/></el-button></el-col>
         <el-col :span="16" class="title"><h1><slot></slot></h1></el-col>
         <el-col :span="4"></el-col>
     </el-row>
@@ -8,9 +8,15 @@
 
 <script>
     import Icon from "./Icon";
+    import backIcon from '../assets/icon_back.png'
     export default {
         name: "AppBar",
         components: {Icon},
+        data(){
+            return{
+                backIcon
+            }
+        },
         methods:{
             back(){
                 this.$router.go(-1)

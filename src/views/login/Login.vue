@@ -1,16 +1,16 @@
 <template>
     <div class="login-container">
-        <div class="avatar-container"><img class="avatar" src="/logo.png"/></div>
+        <div class="avatar-container"><img class="avatar" src="/src/assets/logo.png"/></div>
         <el-form :model="form" :rules="rules" ref="form">
             <el-form-item prop="stu_no">
                 <el-input type="text" v-model="form.stu_no" placeholder="学号">
                     <img style="width: 20px;height: 100%;object-fit: contain"
-                         src="/icon_profile.png"
+                         src="/src/assets/icon_profile.png"
                          slot="prefix"/></el-input>
             </el-form-item>
             <el-form-item prop="password" @keyup.enter.native="submit" style="margin-bottom: 75px">
                 <el-input type="password" v-model="form.password" placeholder="密码">
-                    <img style="width: 20px;height: 100%;object-fit: contain" src="/icon_circle.png"
+                    <img style="width: 20px;height: 100%;object-fit: contain" src="/src/assets/icon_circle.png"
                          slot="prefix"/>
                 </el-input>
             </el-form-item>
