@@ -4,13 +4,13 @@
         <el-form :model="form" :rules="rules" ref="form">
             <el-form-item prop="stu_no">
                 <el-input type="text" v-model="form.stu_no" placeholder="学号">
-                    <img style="width: 20px;height: 100%;object-fit: contain"
+                    <img style="width: 20px;height: 20px;object-fit: contain;vertical-align: middle"
                          src="../../assets/icon_profile.png"
                          slot="prefix"/></el-input>
             </el-form-item>
             <el-form-item prop="password" @keyup.enter.native="submit" style="margin-bottom: 75px">
                 <el-input type="password" v-model="form.password" placeholder="教务密码">
-                    <img style="width: 20px;height: 100%;object-fit: contain" src="../../assets/icon_circle.png"
+                    <img style="width: 20px;height: 20px;object-fit: contain;vertical-align: middle" src="../../assets/icon_circle.png"
                          slot="prefix"/>
                 </el-input>
             </el-form-item>
@@ -90,7 +90,25 @@
     @import "../../style/variables";
 
     .login-container {
+
+        input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+            color: white;
+        }
+
+        input:-moz-placeholder, textarea:-moz-placeholder {
+            color: white;
+        }
+
+        input::-moz-placeholder, textarea::-moz-placeholder {
+            color: white;
+        }
+
+        input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+            color: white;
+        }
+
         .el-input__inner {
+            color: white;
             border-left-width: 0;
             border-top-width: 0;
             border-right-width: 0;

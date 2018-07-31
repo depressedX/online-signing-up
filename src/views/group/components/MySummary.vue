@@ -24,6 +24,7 @@
         box-sizing: border-box;
         padding: 1.5em 2.5em;
         text-align: center;
+        line-height: 2;
         
         .prefix,.suffix{
             position: absolute;

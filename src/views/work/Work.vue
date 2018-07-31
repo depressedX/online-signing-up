@@ -41,7 +41,7 @@
         data() {
             return {
                 scores: [],
-                
+
                 options: [],
                 curGroup: null
 
@@ -52,8 +52,8 @@
                 let res = []
                 for (let i = 0; i < 4; i++) {
                     res[i] = {
-                        name: `第${i+1}周作业`,
-                        score: this.scores[i]||'暂无'
+                        name: `第${i + 1}周作业`,
+                        score: (this.scores[i] instanceof Number || typeof this.scores[i] === "number") ? this.scores[i] : '暂无'
                     }
                 }
                 return res
@@ -66,14 +66,14 @@
                 getWorkExecution().then(data => {
                     // 更新options
                     this.options = data.map(g => getGroupByCode(Math.floor(Number(g.intention.split(',')[0]) / 10)))
-                    
+
                     // groupCode缺省值为第一项
                     groupCode = groupCode || (this.options[0] && this.options[0].code)
-                    
+
                     // 更新表格
-                    let curGroupData =data.find(g => Math.floor(Number(g.intention.split(',')[0]) / 10) === groupCode)
-                    
-                    this.scores = curGroupData?curGroupData.works.split(',').map(w => Number(w)):[]
+                    let curGroupData = data.find(g => Math.floor(Number(g.intention.split(',')[0]) / 10) === groupCode)
+
+                    this.scores = curGroupData ? curGroupData.works.split(',').map(w => Number(w)) : []
 
                     // 更新curGroup
                     this.curGroup = groupCode
@@ -87,8 +87,8 @@
 <style scoped lang="scss">
     .work {
         color: white;
-        
-        .score-table{
+
+        .score-table {
 
             width: 80%;
             border-radius: 10px;
@@ -96,20 +96,22 @@
             border: 1px solid white;
             color: inherit;
             margin: 2em auto;
-            
-            
+
         }
     }
 </style>
 <style lang="scss">
     .work {
-        .score-table.el-table{
+        .score-table.el-table {
 
-            th,tr{
+            th, tr {
                 background-color: transparent;
             }
-            thead{
+            thead {
                 color: inherit;
+            }
+            .el-table__body tr:hover>td{
+                background-color: rgba(50,50,50,.2);
             }
         }
 

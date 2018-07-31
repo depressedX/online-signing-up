@@ -3,22 +3,24 @@
         <app-bar>报名</app-bar>
         <main class="join-content">
             <el-row style="margin: .5em">
-                <el-alert
-                        :closable="false"
-                        title="团队事业群不在软件园校区纳新！请软件园同学不要误报!"
-                        type="info">
-                </el-alert>
+                <!--<el-alert-->
+                        <!--:closable="false"-->
+                        <!--title="团队事业群不在软件园校区纳新！请软件园同学不要误报!"-->
+                        <!--type="info">-->
+                <!--</el-alert>-->
+                <div class="alert">团队事业群不在软件园校区纳新！<br>请软件园同学不要误报!</div>
             </el-row>
             <el-row style="margin: .5em" v-if="this.deadlineFormatted">
-                <el-alert
-                        :closable="false"
-                        :title="`报名截止至：${deadlineFormatted}`"
-                        type="info">
-                </el-alert>
+                <!--<el-alert-->
+                        <!--:closable="false"-->
+                        <!--:title="`报名截止至：${deadlineFormatted}`"-->
+                        <!--type="info">-->
+                <!--</el-alert>-->
+                <div class="alert">报名截止至：{{deadlineFormatted}}</div>
             </el-row>
             <el-form ref="form" :rules="rules" :model="form" label-width="55px" label-position="left">
                 <el-form-item prop="name" label="姓名" class="form-item bottom-line">
-                    <el-input v-model="form.name"></el-input>
+                    <el-input v-model="form.name" disabled></el-input>
                 </el-form-item>
                 <el-form-item label="性别" class="form-item bottom-line">
                     <el-switch
@@ -30,7 +32,7 @@
                     </el-switch>
                 </el-form-item>
                 <el-form-item label="学号" class="form-item bottom-line">
-                    <el-input v-model="form.stu_no"></el-input>
+                    <el-input v-model="form.stu_no" disabled></el-input>
                 </el-form-item>
                 <el-form-item label="校区" prop="campus" class="form-item bottom-line">
                     <el-select v-model="form.campus" placeholder="" style="width: 100%">
@@ -116,7 +118,8 @@
                     })
 
             getSigningUpDeadline().then(t => {
-                this.deadline = new Date(t)
+                // IE Safari不能识别相应时间格式  需要转化
+                this.deadline = new Date(t.split('T')[0])
             })
         },
         data() {
@@ -246,17 +249,44 @@
             width: 100%;
             position: relative;
         }
+        
+        
+        /*顶部的提示*/
+        .alert{
+            background-color: rgba(250,250,250,.5);
+            color: #606266;
+            width: 100%;
+            padding: 8px 24px;
+            box-sizing: border-box;
+            border-radius: 4px;
+            position: relative;
+            font-size: 13px;
+            line-height: 18px;
+        }
+
     }
 </style>
 <style lang="scss">
     @import "../../style/variables";
 
     .join {
-        color: #d7d7d7;
+        color: white;
 
         .el-input--prefix .el-input__inner {
             padding-left: 3em !important;
         }
+        
+        
+        /*修改input颜色*/
+        .el-input__inner,.el-textarea__inner,.el-cascader__label{
+            color: white;
+        }
+        .el-cascader__label span{
+            color: #6f7180;
+        }
+        
+        
+        
 
         input.el-input__inner {
 

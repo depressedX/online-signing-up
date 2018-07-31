@@ -60,7 +60,7 @@
         components: {MySection, MySummary},
         data() {
             return {
-                summaryThemeColor: 'rgba(91,60,122,.75)',
+                summaryThemeColor: 'rgba(138,145,180,.75)',
                 sectionThemeColor: 'rgba(138,145,180,.75)'
             }
         }
