@@ -1,29 +1,27 @@
 export const groups = [
-    {code: 1, name: ' 技术工程事业群'},
-    {code: 2, name: ' 应用服务事业群'},
-    {code: 3, name: ' 网络媒体事业群'},
-    {code: 4, name: ' 团队发展事业群'},
-    {code: 5, name: ' 易班事业群'},
+    {code: 1, name: '技术工程事业群'},
+    {code: 2, name: '应用服务事业群'},
+    {code: 3, name: '网络媒体事业群'},
+    {code: 4, name: '团队发展事业群'},
+    {code: 5, name: '易班工作站'},
 ]
 
 export const departments = [
     {code: 10, name: '技术-视觉设计组'},
     {code: 11, name: '技术-web开发组'},
-    {code: 12, name: '技术-移动开发组'},
-    {code: 20, name: '应用-产品运营部'},
-    {code: 21, name: '应用-内容运营部'},
-    {code: 30, name: '网媒-小树林工作室'},
-    {code: 31, name: '网媒-图视中心'},
+    {code: 12, name: '技术-移动终端组'},
+    {code: 20, name: '应用-产品运营事业部'},
+    {code: 21, name: '应用-内容运营事业部'},
+    {code: 30, name: '网媒-小树林日报'},
+    {code: 31, name: '网媒-视平线工作室'},
     {code: 32, name: '网媒-有盐工作室'},
-    {code: 33, name: '网媒-壹度工作室'},
-    {code: 34, name: '网媒-新闻中心'},
-    {code: 40, name: '团队-人力资源部'},
-    {code: 41, name: '团队-财务部'},
-    {code: 42, name: '团队-采购部'},
+    {code: 40, name: '团队-行政中心·财务部'},
+    {code: 41, name: '团队-行政中心·人力资源部'},
+    {code: 42, name: '团队-行政中心·采购部'},
     {code: 43, name: '团队-运营中心'},
     {code: 50, name: '易班-生活服务事业部'},
     {code: 51, name: '易班-平台运营事业部'},
-    {code: 52, name: '易班-公关推广事业'},
+    {code: 52, name: '易班-公关推广事业部'},
 ]
 
 export const processStage = [
