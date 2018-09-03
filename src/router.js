@@ -126,6 +126,7 @@ router.beforeEach((to, from, next) => {
     let titleRoute = to.matched.find(s => s.meta.title)
     titleRoute && (document.title = titleRoute.meta.title)
 
+    
     // 需要权限
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (!hasLoggedIn()) {
