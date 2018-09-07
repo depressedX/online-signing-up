@@ -17,7 +17,7 @@
                 <router-link
                         class="group-button group-button-3"
                         to="/group/yiban">
-                    <div class="text">易班运营<br/>中心</div>
+                    <div class="text">易班<br/>工作站</div>
                 </router-link>
             </div>
             <div class="row row-2">

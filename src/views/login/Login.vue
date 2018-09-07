@@ -51,7 +51,7 @@
                 let form = this.form
                 this.$refs.form.validate()
                     .then(() => login(form.stu_no, form.password).then(() => {
-                        this.$message('登陆成功 即将跳转');
+                        this.$message('登录成功 即将跳转');
                         this.$router.push('/')
                     }, e => {
                         this.$message('登录失败 error:' + e.message);

@@ -4,34 +4,10 @@
         <app-bar>网络媒体事业群</app-bar>
         <main>
             <my-summary :theme-color="summaryThemeColor">
-                网络媒体事业群下设媒体运营中心、<br/>
-                新闻中心、图视中心、有盐、<br/>
-                小树林日报五个部门。<br/>
+                网络媒体事业群下设图视中心、<br/>
+                有盐工作室、小树林日报三个部门。<br/>
                 为热爱文字的你提供展示的平台。
             </my-summary>
-            <my-section label="媒体运营中心" :theme-color="sectionThemeColor">
-                我们是媒体运营中心。<br/>
-                你看过西游记吗？<br/>
-                妖魔鬼怪七十二变就是我们！<br/>
-                千奇百怪的排版风格，<br/>
-                不落窠臼的艺术审美，<br/>
-                加上设计策划的技能，<br/>
-                再送你10000+粉丝，<br/>
-                我看，你就是<br/>
-                新媒体取经路上的明日之星！
-            </my-section>
-            <my-section label="新闻中心" :theme-color="sectionThemeColor">
-                我们是新闻中心。<br/>
-                新鲜、真实<br/>
-                ——我们就是网媒“小鲜肉”<br/>
-                铁肩道义、妙笔文章<br/>
-                将热点放在解剖台上，<br/>
-                将事实放在显微镜下。<br/>
-                你是否有追踪热点的敏锐？<br/>
-                你是否有摄影写作的热情？<br/>
-                如果有，别犹豫！<br/>
-                你就是新闻中心需要的小鲜肉！
-            </my-section>
             <my-section label="图视中心" :theme-color="sectionThemeColor">
                 我们是图视中心，<br/>
                 致力于打造山东大学<br/>
@@ -55,9 +31,9 @@
                 一直寻寻觅觅的你，<br/>
                 欢迎加入图视中心的你。
             </my-section>
-            <my-section label="有盐" :theme-color="sectionThemeColor">
+            <my-section label="有盐工作室" :theme-color="sectionThemeColor">
                 我们是有盐，<br/>
-                是学生在线山中阅工作室<br/>
+                是学生在线有盐工作室<br/>
                 出品的线上生活杂志。<br/>
                 调味品在一道菜中占的比重极小，<br/>
                 但它对整道菜的味道<br/>
@@ -75,6 +51,17 @@
                 我们是有盐，<br/>
                 欢迎你和我们一起<br/>
                 创造有滋味的生活。
+            </my-section>
+            <my-section label="媒体运营中心" :theme-color="sectionThemeColor">
+                我们是媒体运营中心。<br/>
+                你看过西游记吗？<br/>
+                妖魔鬼怪七十二变就是我们！<br/>
+                千奇百怪的排版风格，<br/>
+                不落窠臼的艺术审美，<br/>
+                加上设计策划的技能，<br/>
+                再送你10000+粉丝，<br/>
+                我看，你就是<br/>
+                新媒体取经路上的明日之星！
             </my-section>
             <my-section label="小树林日报" :theme-color="sectionThemeColor">
                 我们是小树林日报，<br/>

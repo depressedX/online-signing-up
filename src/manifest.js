@@ -13,7 +13,7 @@ export const departments = [
     {code: 20, name: '应用-产品运营事业部'},
     {code: 21, name: '应用-内容运营事业部'},
     {code: 30, name: '网媒-小树林日报'},
-    {code: 31, name: '网媒-视平线工作室'},
+    {code: 31, name: '网媒-图视中心'},
     {code: 32, name: '网媒-有盐工作室'},
     {code: 40, name: '团队-行政中心·财务部'},
     {code: 41, name: '团队-行政中心·人力资源部'},

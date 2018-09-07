@@ -20,11 +20,13 @@
 
 <style scoped lang="scss">
     .summary {
+        font-size: 14px;
         position: relative;
         box-sizing: border-box;
-        padding: 1.5em 2.5em;
+        padding: 1.5em 0em;
         text-align: center;
         line-height: 2;
+        
         
         .prefix,.suffix{
             position: absolute;

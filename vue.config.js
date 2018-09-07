@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'production') {
         devServer: {
             proxy: {
                 "/api/v1": {
-                    target: "http://119.29.52.224:8083",
+                    target: "https://sduonline.cn/joinus",
                     // pathRewrite: {"^/api/v1": ""}
                 }
             }

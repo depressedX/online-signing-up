@@ -4,13 +4,31 @@
         <app-bar>团队发展事业群</app-bar>
         <main>
             <my-summary :theme-color="summaryThemeColor">
-                团队发展事业群下设人力资源、<br/>
-                采购、运营和财务四个部门。<br/>
-                这里不仅强调部门的工作成果，<br/>
-                更强调团结一致以达到学生在线的整体发展。
+                团队发展事业群下设行政中心<br/>
+                和运营中心，行政中心下设人力资源部，<br/>
+                财务部，采购部。我们不仅强调<br/>
+                部门的工作成果，更强调团结一致<br/>
+                达到学生在线的整体发展。<br/>
+                <span style="font-size: .8em">（行政中心在中心和洪楼纳新，<br/>
+                运营中心在兴隆山纳新，团队在软件园不纳新。）</span>
             </my-summary>
-            <my-section label="人力资源部门" :theme-color="sectionThemeColor">
+            <my-section label="运营中心" :theme-color="sectionThemeColor">
                 这里主要负责学生在线的<br/>
+                办公室的日常工作与运营维护。<br/>
+                处理着平凡但必不可少的<br/>
+                值班值日等大小事务。<br/>
+                不仅如此，<br/>
+                它还负责组织各部门的信息传递工作，<br/>
+                保证各部门信息沟通顺畅，<br/>
+                使工作流程能够更加明晰，<br/>
+                终而协助实现学生在线共同的战略目标。<br/>
+                如果你善于沟通，<br/>
+                并想尝试做好一个办公室的管理者，<br/>
+                那就加入运营部门吧。
+            </my-section>
+            <my-section label="人力资源部" :theme-color="sectionThemeColor">
+                这里是隶属于行政中心的人力资源部<br/>
+                主要负责学生在线的<br/>
                 人员的调度与活动的承办，<br/>
                 是协助各个事业群<br/>
                 主持操办学生在线大小活动的一把好手。<br/>
@@ -25,8 +43,9 @@
                 那么人力资源部门，<br/>
                 你一定不能错过。
             </my-section>
-            <my-section label="采购部门" :theme-color="sectionThemeColor">
-                这里主要负责协助各单位<br/>
+            <my-section label="采购部" :theme-color="sectionThemeColor">
+                这里是隶属于行政中心的采购部<br/>
+                主要负责协助各单位<br/>
                 精准地采购与物资的清算。<br/>
                 一次次缜密的预算、<br/>
                 一次次认真的结算，<br/>
@@ -41,22 +60,9 @@
                 充满热情、享受计划与采购的乐趣，<br/>
                 采购部门都欢迎你的加入。
             </my-section>
-            <my-section label="运营部门" :theme-color="sectionThemeColor">
-                这里主要负责学生在线的<br/>
-                办公室的日常工作与运营维护。<br/>
-                处理着平凡但必不可少的<br/>
-                值班值日等大小事务。<br/>
-                不仅如此，<br/>
-                它还负责组织各部门的信息传递工作，<br/>
-                保证各部门信息沟通顺畅，<br/>
-                使工作流程能够更加明晰，<br/>
-                终而协助实现学生在线共同的战略目标。<br/>
-                如果你善于沟通，<br/>
-                并想尝试做好一个办公室的管理者，<br/>
-                那就加入运营部门吧。
-            </my-section>
-            <my-section label="财务部门" :theme-color="sectionThemeColor">
-                这里主要负责学生在线的<br/>
+            <my-section label="财务部" :theme-color="sectionThemeColor">
+                这里是隶属于行政中心的财务部<br/>
+                主要负责学生在线的<br/>
                 后方资金保障与精打细算。<br/>
                 每月根据按劳分配的原则，<br/>
                 负责薪资的发放工作。<br/>
