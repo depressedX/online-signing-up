@@ -52,17 +52,6 @@
                 欢迎你和我们一起<br/>
                 创造有滋味的生活。
             </my-section>
-            <my-section label="媒体运营中心" :theme-color="sectionThemeColor">
-                我们是媒体运营中心。<br/>
-                你看过西游记吗？<br/>
-                妖魔鬼怪七十二变就是我们！<br/>
-                千奇百怪的排版风格，<br/>
-                不落窠臼的艺术审美，<br/>
-                加上设计策划的技能，<br/>
-                再送你10000+粉丝，<br/>
-                我看，你就是<br/>
-                新媒体取经路上的明日之星！
-            </my-section>
             <my-section label="小树林日报" :theme-color="sectionThemeColor">
                 我们是小树林日报，<br/>
                 致力于打造山东大学<br/>
