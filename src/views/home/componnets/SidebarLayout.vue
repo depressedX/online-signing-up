@@ -3,7 +3,7 @@
         <div class="avatar-container">
             <img src="../../../assets/logo.png"/>
         </div>
-        <div class="info-container">
+        <div class="info-container" v-if="hasLoggedIn">
             <template v-if="!loading">
                 <p class="name">{{name}}</p>
                 <p class="stuId">{{stu_no}}</p>
@@ -12,6 +12,7 @@
         </div>
         <hr/>
         <el-menu
+                v-if="hasLoggedIn"
                 class="menu"
                 router
                 default-active="1">
@@ -24,18 +25,22 @@
                 <span slot="title">招新进程</span>
             </el-menu-item>
         </el-menu>
-        <div class="logout-container">
+        <div class="authorization-container">
             <hr/>
-            <el-button @click="logout" type="text">
+            <el-button @click="logout" type="text" v-if="hasLoggedIn">
                 <icon :src="exitIcon"/>
                 退出登录
+            </el-button>
+            <el-button @click="login" type="text" v-else>
+                <icon :src="exitIcon"/>
+                点击登录
             </el-button>
         </div>
     </div>
 </template>
 
 <script>
-    import {getUserInfo, logout} from "../../../resource";
+    import {getUserInfo, hasLoggedIn, logout} from "../../../resource";
     import Icon from "../../../components/Icon";
 
     import bubbleIcon from '../../../assets/icon_bubble.png'
@@ -46,17 +51,11 @@
         name: "SidebarLayout",
         components: {Icon},
         created() {
-            this.loading = true
-            getUserInfo().then(userInfo => {
-                this.name = userInfo.name
-                this.stu_no = userInfo.stu_no
 
+            if (this.hasLoggedIn) {
+                this.getUserInfo()
+            }
 
-            }).then(() => {
-                this.loading = false
-            }, () => {
-                this.loading = false
-            })
         },
         data() {
             return {
@@ -65,20 +64,40 @@
 
                 name: '',
                 stu_no: '',
-                loading: true
+
+                // 是否正在加载
+                loading: true,
+
+                // 是否登录
+                hasLoggedIn: hasLoggedIn()
             }
         },
         methods: {
-            logout() {
-                logout().then(() => {
-                    this.$message({
-                        message: '退出成功',
-                        type: 'success'
-                    });
-                    setTimeout(() => {
-                        this.$router.push('/login')
-                    }, 1000)
-                })
+            async logout() {
+                await logout()
+                this.$message({
+                    message: '退出成功',
+                    type: 'success'
+                });
+                
+                // 刷新下页面
+                window.location.reload()
+
+            },
+            login() {
+                this.$router.push('/login')
+            },
+            async getUserInfo() {
+
+                this.loading = true
+                try {
+                    let userInfo = await getUserInfo()
+                    this.name = userInfo.name
+                    this.stu_no = userInfo.stu_no
+                } finally {
+                    this.loading = false
+                }
+
             }
         }
     }
@@ -120,7 +139,7 @@
             }
         }
 
-        .logout-container {
+        .authorization-container {
             box-sizing: border-box;
             padding: 0 $sidebar-padding-width;
             width: 100%;

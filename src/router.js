@@ -16,7 +16,6 @@ const groupRoutes = [
         path: '/group/tech',
         component: vc('./group/Tech').default,
         meta: {
-            requiresAuth: true,
             title: '部门介绍'
         }
     },
@@ -24,7 +23,6 @@ const groupRoutes = [
         path: '/group/media',
         component: vc('./group/Media').default,
         meta: {
-            requiresAuth: true,
             title: '部门介绍'
         }
     },
@@ -32,7 +30,6 @@ const groupRoutes = [
         path: '/group/application',
         component: vc('./group/Application').default,
         meta: {
-            requiresAuth: true,
             title: '部门介绍'
         }
     },
@@ -40,7 +37,6 @@ const groupRoutes = [
         path: '/group/team',
         component: vc('./group/Team').default,
         meta: {
-            requiresAuth: true,
             title: '部门介绍'
         }
     },
@@ -48,7 +44,6 @@ const groupRoutes = [
         path: '/group/yiban',
         component: vc('./group/YiBan').default,
         meta: {
-            requiresAuth: true,
             title: '部门介绍'
         }
     },
@@ -61,7 +56,6 @@ const router = new Router({
             name: 'home',
             component: _('home'),
             meta: {
-                requiresAuth: true,
                 title: '首页'
             }
         },
@@ -81,7 +75,6 @@ const router = new Router({
             name: 'join',
             component: _('join'),
             meta: {
-                requiresAuth: true,
                 title: '加入我们'
             }
         },
@@ -126,7 +119,6 @@ router.beforeEach((to, from, next) => {
     let titleRoute = to.matched.find(s => s.meta.title)
     titleRoute && (document.title = titleRoute.meta.title)
 
-    
     // 需要权限
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (!hasLoggedIn()) {

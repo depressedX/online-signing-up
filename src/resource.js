@@ -28,12 +28,29 @@ const handleResponse = resp => {
 
 const loginStatusKey = 'hasLoggedIn'
 
-export function login(stu_no, password) {
-    return http.post('login', qs.stringify({stu_no, password}))
-        .then(handleResponse)
-        .then(() => {
-            sessionStorage.setItem(loginStatusKey, 'true')
-        })
+// 初始化  首先发请求看是否登陆
+async function updateAuthorizationStatus() {
+    let hasLoggedIn = handleResponse(await http.get('hasLoggedIn'))
+    hasLoggedIn = hasLoggedIn ? true : false
+    sessionStorage.setItem(loginStatusKey, hasLoggedIn.toString())
+}
+
+updateAuthorizationStatus().then()
+
+export async function signup(stu_no, name) {
+
+    let resp = await http.post('signup', qs.stringify({stu_no, name}))
+    return handleResponse(resp)
+
+}
+
+export async function login(stu_no, name) {
+
+    let resp = await http.post('login', qs.stringify({stu_no, name}))
+    resp = handleResponse(resp)
+    sessionStorage.setItem(loginStatusKey, 'true')
+    return resp
+
 }
 
 export function hasLoggedIn() {

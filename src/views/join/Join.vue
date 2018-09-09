@@ -3,24 +3,14 @@
         <app-bar>报名</app-bar>
         <main class="join-content">
             <el-row style="margin: .5em">
-                <!--<el-alert-->
-                        <!--:closable="false"-->
-                        <!--title="团队事业群不在软件园校区纳新！请软件园同学不要误报!"-->
-                        <!--type="info">-->
-                <!--</el-alert>-->
                 <div class="alert">团队事业群不在软件园校区纳新！<br>请软件园同学不要误报!</div>
             </el-row>
             <el-row style="margin: .5em" v-if="this.deadlineFormatted">
-                <!--<el-alert-->
-                        <!--:closable="false"-->
-                        <!--:title="`报名截止至：${deadlineFormatted}`"-->
-                        <!--type="info">-->
-                <!--</el-alert>-->
                 <div class="alert">报名截止至：{{deadlineFormatted}}</div>
             </el-row>
             <el-form ref="form" :rules="rules" :model="form" label-width="55px" label-position="left">
                 <el-form-item prop="name" label="姓名" class="form-item bottom-line">
-                    <el-input v-model="form.name" disabled></el-input>
+                    <el-input v-model="form.name"></el-input>
                 </el-form-item>
                 <el-form-item label="性别" class="form-item bottom-line">
                     <el-switch
@@ -31,8 +21,8 @@
                             inactive-text="女">
                     </el-switch>
                 </el-form-item>
-                <el-form-item label="学号" class="form-item bottom-line">
-                    <el-input v-model="form.stu_no" disabled></el-input>
+                <el-form-item prop="stu_no" label="学号" class="form-item bottom-line">
+                    <el-input v-model="form.stu_no" :disabled="hasLoggedIn"></el-input>
                 </el-form-item>
                 <el-form-item label="校区" prop="campus" class="form-item bottom-line">
                     <el-select v-model="form.campus" placeholder="" style="width: 100%">
@@ -84,7 +74,15 @@
 
 <script>
     import {groups, departments, campus} from "../../manifest";
-    import {getForm, getSigningUpDeadline, getUserInfo, submitForm, updateUserInfo} from "../../resource";
+    import {
+        getForm,
+        getSigningUpDeadline,
+        getUserInfo,
+        hasLoggedIn, login,
+        signup,
+        submitForm,
+        updateUserInfo
+    } from "../../resource";
 
     const intentionCascaderOptions = groups.map(group => ({
         value: group.code,
@@ -105,17 +103,11 @@
     export default {
         name: "Join",
         created() {
-            Promise.all([getUserInfo().catch(e => ({})), getForm().catch(e => ({}))])
-                .then(r => {
-                        let t = this.data2Form(r[0], r[1])
-                        Object.keys(this.form).forEach(key => {
-                            t[key] !== null && t[key] !== undefined && (this.form[key] = t[key])
-                        })
-                    },
-                    errors => {
-                        this.$message.error('网络请求错误，请重新加载');
-                        this.$router.go(-1)
-                    })
+
+            if (hasLoggedIn()) {
+                this.fillFormWithRemoteData()
+            }
+
 
             getSigningUpDeadline().then(t => {
                 // IE Safari不能识别相应时间格式  需要转化
@@ -126,6 +118,8 @@
             return {
                 intentionCascaderOptions,
                 campusOptions,
+
+                hasLoggedIn: hasLoggedIn(),
 
                 submiting: false,
 
@@ -148,14 +142,20 @@
                 },
 
                 rules: {
+                    stu_no: [
+                        {required: true, message: '请填写学号', trigger: 'blur'}
+                    ],
+                    name: [
+                        {required: true, message: '请填写姓名', trigger: 'blur'}
+                    ],
                     campus: [
                         {required: true, message: '请选择校区', trigger: 'blur'}
                     ],
                     academy: [
-                        {required: true, message: '请选择学院', trigger: 'blur'}
+                        {required: true, message: '请填写学院', trigger: 'blur'}
                     ],
                     from: [
-                        {required: true, message: '家乡', trigger: 'blur'}
+                        {required: true, message: '请填写家乡', trigger: 'blur'}
                     ],
                     intention: [
                         {required: true, message: '请选择意愿部门', trigger: 'blur'}
@@ -185,23 +185,54 @@
             }
         },
         methods: {
-            onSubmit() {
+            async onSubmit() {
                 this.submiting = true
+                try {
+                    
+                    let {userData, joinData} = this.form2Data(this.form)
 
-                let {userData, joinData} = this.form2Data(this.form)
+                    let {stu_no, name} = userData
 
-                // 有空加个验证  是否修改过个人信息  现在先不验证了
-                this.$refs.form.validate().then(() =>
-                    updateUserInfo(userData)
-                        .then(submitForm.bind(undefined, joinData))
-                        .then(() => {
-                            alert('提交成功');
-                        })
-                ).then(() => {
+                    try {
+
+                        if (!this.hasLoggedIn) {
+                            await this.$confirm('提交后学号将不可再修改, 是否继续?', '提示', {
+                                confirmButtonText: '确定',
+                                cancelButtonText: '取消',
+                                type: 'warning'
+                            })
+                        }
+
+                    } catch (e) {
+                        return
+                    }
+
+
+                    try {
+                        // TODO 有空加个验证  是否修改过个人信息  现在先不验证了
+                        await this.$refs.form.validate()
+                    }
+                    catch (e) {
+                        return
+                    }
+
+                    try {
+
+                        if (!this.hasLoggedIn) {
+                            await signup(stu_no, name)
+                            await login(stu_no, name)
+                        }
+                        await updateUserInfo(userData)
+                        await submitForm(joinData)
+                        alert('提交成功')
+
+                    } catch (e) {
+                        this.$message.error(e.message)
+                    }
+
+                } finally {
                     this.submiting = false
-                }, () => {
-                    this.submiting = false
-                })
+                }
             },
             data2Form(userData, joinData) {
                 userData.campus = userData.campus ? Number(userData.campus) : null
@@ -231,8 +262,35 @@
                     userData,
                     joinData
                 }
+            },
+
+
+            // 在已登录的情况下  拉去原始表单信息作为初始表单数据
+            fillFormWithRemoteData() {
+
+                Promise.all([getUserInfo().catch(e => ({})), getForm().catch(e => ({}))])
+                    .then(r => {
+
+                            let t = this.data2Form(r[0], r[1])
+
+                            Object.keys(this.form).forEach(key => {
+
+                                if (t[key] !== null && t[key] !== undefined) {
+
+                                    this.form[key] = t[key]
+
+                                }
+
+                            })
+
+                        },
+                        errors => {
+                            this.$message.error('网络请求错误，请重新加载');
+                            this.$router.go(-1)
+                        })
             }
-        }
+
+        },
     }
 </script>
 
@@ -249,11 +307,10 @@
             width: 100%;
             position: relative;
         }
-        
-        
+
         /*顶部的提示*/
-        .alert{
-            background-color: rgba(250,250,250,.5);
+        .alert {
+            background-color: rgba(250, 250, 250, .5);
             color: #606266;
             width: 100%;
             padding: 8px 24px;
@@ -268,6 +325,11 @@
 </style>
 <style lang="scss">
     @import "../../style/variables";
+    
+    /*对messagebox最大宽度做限制*/
+    .el-message-box{
+        max-width: 100%;
+    }
 
     .join {
         color: white;
@@ -275,18 +337,14 @@
         .el-input--prefix .el-input__inner {
             padding-left: 3em !important;
         }
-        
-        
+
         /*修改input颜色*/
-        .el-input__inner,.el-textarea__inner,.el-cascader__label{
+        .el-input__inner, .el-textarea__inner, .el-cascader__label {
             color: white;
         }
-        .el-cascader__label span{
+        .el-cascader__label span {
             color: #6f7180;
         }
-        
-        
-        
 
         input.el-input__inner {
 
