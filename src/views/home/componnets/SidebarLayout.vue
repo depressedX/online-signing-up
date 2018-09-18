@@ -12,17 +12,22 @@
         </div>
         <hr/>
         <el-menu
-                v-if="hasLoggedIn"
                 class="menu"
                 router
                 default-active="1">
-            <el-menu-item index="/work">
-                <icon :src="profileIcon"/>
-                <span slot="title">作业情况</span>
-            </el-menu-item>
-            <el-menu-item index="/process">
+            <template v-if="hasLoggedIn">
+                <el-menu-item index="/work">
+                    <icon :src="profileIcon"/>
+                    <span slot="title">作业情况</span>
+                </el-menu-item>
+                <el-menu-item index="/process">
+                    <icon :src="bubbleIcon"/>
+                    <span slot="title">招新进程</span>
+                </el-menu-item>
+            </template>
+            <el-menu-item index="/interview">
                 <icon :src="bubbleIcon"/>
-                <span slot="title">招新进程</span>
+                <span slot="title">面试详情</span>
             </el-menu-item>
         </el-menu>
         <div class="authorization-container">
@@ -79,7 +84,7 @@
                     message: '退出成功',
                     type: 'success'
                 });
-                
+
                 // 刷新下页面
                 window.location.reload()
 

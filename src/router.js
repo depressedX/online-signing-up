@@ -97,6 +97,14 @@ const router = new Router({
             }
         },
         {
+            path: '/interview',
+            name: 'interview',
+            component: _('interview'),
+            meta: {
+                title: '面试详情'
+            }
+        },
+        {
             path: '/404',
             component: vc('./PageNotFound').default,
             meta: {
